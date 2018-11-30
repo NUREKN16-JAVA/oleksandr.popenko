@@ -1,5 +1,4 @@
-<project name="usermanagement" basedir="." default="compile">
-
+<project name="usermanagement" basedir="." default="test">
 	
 	<property name="build-dir" value="${basedir}/out"/>
 	<property name="classes-dir" value="${build-dir}/classes"/>
@@ -49,8 +48,9 @@
 	            <classpath refid="classpath.test"/>
 	        </javac>
 	    </target>
-<target name="test" depends="test-compile">
-	        <junit >
+
+	<target name="test" depends="test-compile">
+	        <junit printsummary="yes" haltonfailure="no">
 	            <classpath>
 	                <pathelement location="${buildDir}"/>
 	                <path refid="classpath.test"/>
@@ -63,5 +63,4 @@
 	            </batchtest>
 	        </junit>
 	    </target>
-	
 	</project>
