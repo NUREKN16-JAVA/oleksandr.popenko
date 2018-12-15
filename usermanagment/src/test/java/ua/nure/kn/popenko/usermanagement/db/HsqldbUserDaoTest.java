@@ -10,7 +10,6 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.XmlDataSet;
 
 import ua.nure.kn.popenko.usermanagement.User;
-
 public class HsqldbUserDaoTest extends DatabaseTestCase {
 	
 	private UserDao dao;

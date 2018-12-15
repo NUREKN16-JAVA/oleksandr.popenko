@@ -1,10 +1,10 @@
 package ua.nure.kn.popenko.usermanagement.db;
 
-
-
 import java.util.Collection;
 
 import ua.nure.kn.popenko.usermanagement.User;
+
+
 
 public interface UserDao {
 
@@ -32,6 +32,6 @@ public interface UserDao {
 		
 		void delete(User user) throws DatabaseException;
 		
-		void setConnectionFactory(ConnectionFactory connectionFactory);
+		void setConnectionFactory(ConnectionFactory connectionFactory) throws DatabaseException;
 
 }
