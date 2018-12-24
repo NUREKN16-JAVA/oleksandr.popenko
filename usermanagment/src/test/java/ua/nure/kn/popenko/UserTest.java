@@ -1,10 +1,12 @@
-package test.java.ua.nure.kn.popenko;
+package ua.nure.kn.popenko;
 
-import main.java.ua.nure.kn.popenko.User;
+
 import junit.framework.TestCase;
 
 import java.text.ParseException;
 import java.util.Calendar;
+
+import ua.nure.kn.popenko.usermanagement.User;
 
 public class UserTest extends TestCase {
 

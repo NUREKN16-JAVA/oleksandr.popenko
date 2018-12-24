@@ -14,9 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-//import org.junit.After;
+import org.junit.After;
 import org.junit.Before;
-//import org.junit.Test;
+import org.junit.Test;
 
 import com.mockobjects.dynamic.Mock;
 
