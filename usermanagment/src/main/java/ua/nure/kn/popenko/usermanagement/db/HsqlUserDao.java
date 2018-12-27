@@ -19,6 +19,7 @@ class HsqldbUserDao implements UserDao {
 	private static final String FIND_QUERY = "SELECT * FROM users WHERE id = ?";
 	private static final String DELETE_QUERY = "DELETE FROM users WHERE id = ?";
 	private static final String UPDATE_QUERY = "UPDATE users SET firstname = ?, lastname = ?, dateofbirth = ?  WHERE id = ?";
+	private static final String SELECT_USERS_BY_NAMES = "SELECT id, firstname, lastname, dateofbirth FROM users WHERE firstName = ? AND lastName=?";;
 	private ConnectionFactory connectionFactory;
 	
 	public HsqldbUserDao() {
@@ -102,34 +103,6 @@ class HsqldbUserDao implements UserDao {
 	        } 
 		
 	}
-	
-	 	
-	
-
-	@Override
-	public Collection<User> findAll() throws DatabaseException {
-		Collection result = new LinkedList<>();
-		
-		
-		try {
-			Connection connection = connectionFactory.createConnection();
-			Statement statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery(SELECT_ALL_QUERY);
-			while(resultSet.next()) {
-				User user = new User();
-				user.setId(new Long(resultSet.getLong(1)));
-				user.setFirstName(resultSet.getString(2));
-				user.setLastName(resultSet.getString(3));
-				user.setDateOfBirth(resultSet.getDate(4));
-				result.add(user);
-			}
-		} catch (DatabaseException e) {
-			throw e;
-		} catch (SQLException e) {
-			throw new DatabaseException(e);
-		}
-		return result;
-	}
 
 	@Override
 	public void update(User user) throws DatabaseException {
@@ -169,6 +142,68 @@ class HsqldbUserDao implements UserDao {
             throw new DatabaseException(e);
         }
 
+	}
+
+	@Override
+	public Collection find(String firstName, String lastName) throws DatabaseException {
+		// TODO Auto-generated method stub
+		Collection result = new LinkedList();
+		try {
+			Connection connection = connectionFactory.createConnection();
+			PreparedStatement statement = connection.prepareStatement(SELECT_USERS_BY_NAMES);
+			statement.setString(1, firstName);
+			statement.setString(2, lastName);
+			ResultSet resultSet = statement.executeQuery();
+			User user;
+			while(resultSet.next()) {
+				user = new User();
+				user.setId(resultSet.getLong(1));
+				user.setFirstName(resultSet.getString(2));
+				user.setLastName(resultSet.getString(3));
+				user.setDateOfBirth(resultSet.getDate(4));
+				result.add(user);
+			}resultSet.close();
+			statement.close();
+			connection.close();
+		} catch (DatabaseException e) {
+			throw e;
+		} catch (SQLException e) {
+			throw new DatabaseException(e);
+		}
+		return result;
+	}
+
+	public Collection findAll() throws DatabaseException {
+		Collection<User> result = new LinkedList<User>();
+		try {
+			Connection connection = connectionFactory.createConnection();
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(SELECT_ALL_QUERY);
+			User user;
+			while (resultSet.next()) {
+				user = new User();
+				user.setId(resultSet.getLong(1));
+				user.setFirstName(resultSet.getString(2));
+				user.setLastName(resultSet.getString(3));
+				user.setDateOfBirth(resultSet.getDate(4));
+				result.add(user);
+			}
+
+			resultSet.close();
+			statement.close();
+			connection.close();
+		} catch (DatabaseException e) {
+			throw e;
+		} catch (SQLException e) {
+			throw new DatabaseException(e);
+		}
+		return result;
+	}
+
+	@Override
+	public Collection<?> findall() throws DatabaseException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	
